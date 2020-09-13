@@ -11,6 +11,7 @@ interface AuthState {
   token: string;
   user: object;
 }
+
 interface SignInCredentials {
   email: string;
   password: string;
