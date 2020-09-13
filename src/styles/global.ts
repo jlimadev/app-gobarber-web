@@ -12,6 +12,7 @@ export default createGlobalStyle`
     background: #312E38;
     color: #FFFFFF;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   body, input, button {
@@ -25,5 +26,9 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  .animation {
+    overflow: hidden;
   }
 `;
