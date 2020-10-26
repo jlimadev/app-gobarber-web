@@ -49,7 +49,7 @@ const SignUp: React.FC = () => {
             'Cadastro realizado com sucesso, você já pode realizar o seu logon.',
         });
 
-        history.push('/');
+        history.push('/signin');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);

@@ -1,7 +1,11 @@
-import styled from 'styled-components';
-import { shade } from 'polished';
+import styled, { css } from 'styled-components';
+import { shade, lighten } from 'polished';
 
-export const Container = styled.button`
+interface ButtonProps {
+  isLoading: boolean;
+}
+
+export const Container = styled.button<ButtonProps>`
   background: #ff9000;
   height: 56px;
   border-radius: 10px;
@@ -16,4 +20,10 @@ export const Container = styled.button`
   &:hover {
     background: ${shade(0.2, '#ff9000')};
   }
+
+  ${props =>
+    props.isLoading &&
+    css`
+      background: ${lighten(0, '#ff9000')};
+    `}
 `;
