@@ -35,13 +35,11 @@ export const Profile = styled.div`
   display: flex;
   align-items: center;
   margin-left: 80px;
-
   img {
     width: 56px;
     height: 56px;
     border-radius: 50%;
   }
-
   div {
     display: flex;
     flex-direction: column;
@@ -50,7 +48,7 @@ export const Profile = styled.div`
     span {
       color: #f4ede8;
     }
-    strong {
+    a {
       text-decoration: none;
       color: #ff9000;
       &:hover {
