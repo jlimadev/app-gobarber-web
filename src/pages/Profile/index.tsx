@@ -45,7 +45,9 @@ const Profile: React.FC = () => {
           old_password: Yup.string(),
           password: Yup.string().when('old_password', {
             is: val => !!val.length,
-            then: Yup.string().required('Campo obrigatório'),
+            then: Yup.string()
+              .required('Campo obrigatório')
+              .min(6, 'Mínimo 6 dígitios'),
             otherwise: Yup.string(),
           }),
           password_confirmation: Yup.string()
@@ -119,8 +121,6 @@ const Profile: React.FC = () => {
         const data = new FormData();
 
         data.append('avatar', e.target.files[0]);
-
-        console.log(data);
 
         api.patch('/users/avatar', data).then(response => {
           updateUser(response.data);
