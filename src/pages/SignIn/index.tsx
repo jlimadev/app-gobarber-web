@@ -22,7 +22,7 @@ const SignIn: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
-  const { user, signIn } = useAuth();
+  const { signIn } = useAuth();
 
   const submitHandler = useCallback(
     async (data: SingInFormData) => {
