@@ -55,5 +55,8 @@
   "resetPasaswordTitle": "Reset de Senha",
   "newPasswordPlaceholder": "Nova senha",
   "confirmPasswordPlaceholder": "Confirme a nova senha",
-  "confirmButton": "Confirmar"
+  "confirmButton": "Confirmar",
+  "profileTitle": "Meu perfil",
+  "profileUpdatedSuccess": "Suas informações do perfil foram atualizadas com sucesso!",
+  "profileUpdatedFail": "Erro ao atualizar o perfil, tente novamente"
 }

@@ -5,6 +5,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { useHistory, Link } from 'react-router-dom';
 
+import { useIntl } from 'react-intl';
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
@@ -31,33 +32,45 @@ const Profile: React.FC = () => {
   const history = useHistory();
 
   const { user, updateUser } = useAuth();
+  const { formatMessage } = useIntl();
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
+      const minDigits = 6;
       try {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          name: Yup.string().required('Nome obrigatório'),
+          name: Yup.string().required(
+            `${formatMessage({ id: 'requiredName' })}`,
+          ),
           email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('Digite um e-mail válido'),
+            .required(`${formatMessage({ id: 'requiredEmail' })}`)
+            .email(`${formatMessage({ id: 'validEmail' })}`),
           old_password: Yup.string(),
           password: Yup.string().when('old_password', {
             is: val => !!val.length,
             then: Yup.string()
-              .required('Campo obrigatório')
-              .min(6, 'Mínimo 6 dígitios'),
+              .required(`${formatMessage({ id: 'requiredPassword' })}`)
+              .min(
+                minDigits,
+                `${formatMessage({ id: 'minDigits' })}: ${minDigits}`,
+              ),
             otherwise: Yup.string(),
           }),
           password_confirmation: Yup.string()
             .when('old_password', {
               is: val => !!val.length,
-              then: Yup.string().required('Campo obrigatório'),
+              then: Yup.string().required(
+                `${formatMessage({ id: 'requiredPassword' })}`,
+              ),
               otherwise: Yup.string(),
             })
             .nullable()
-            .oneOf([Yup.ref('password'), null], 'Confirmação incorreta'),
+            .oneOf(
+              [Yup.ref('password'), null],
+              `${formatMessage({ id: 'invalidConfirmation' })}`,
+            ),
         });
 
         await schema.validate(data, {
@@ -92,9 +105,8 @@ const Profile: React.FC = () => {
 
         addToast({
           type: 'success',
-          title: 'Perfil atualizado!',
-          description:
-            'Suas informações do perfil foram atualizadas com sucesso!',
+          title: `${formatMessage({ id: 'successTitle' })}!`,
+          description: `${formatMessage({ id: 'profileUpdatedSuccess' })}!`,
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -107,12 +119,12 @@ const Profile: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro na atualização',
-          description: 'Ocorreu um erro ao atualizar perfil, tente novamente.',
+          title: `${formatMessage({ id: 'failTitle' })}!`,
+          description: `${formatMessage({ id: 'profileUpdatedFail' })}!`,
         });
       }
     },
-    [addToast, history, updateUser],
+    [addToast, formatMessage, history, updateUser],
   );
 
   const handleAvatarChange = useCallback(
@@ -127,12 +139,12 @@ const Profile: React.FC = () => {
 
           addToast({
             type: 'success',
-            title: 'Avatar atualizado!',
+            title: `${formatMessage({ id: 'successTitle' })}!`,
           });
         });
       }
     },
-    [addToast, updateUser],
+    [addToast, formatMessage, updateUser],
   );
 
   return (
@@ -162,9 +174,13 @@ const Profile: React.FC = () => {
               <input type="file" id="avatar" onChange={handleAvatarChange} />
             </label>
           </AvatarInput>
-          <h1>Meu perfil</h1>
+          <h1>{formatMessage({ id: 'profileTitle' })}</h1>
 
-          <Input icon={FiUser} name="name" placeholder="Nome" />
+          <Input
+            icon={FiUser}
+            name="name"
+            placeholder={formatMessage({ id: 'name' })}
+          />
           <Input icon={FiMail} name="email" placeholder="E-mail" />
 
           <Input
@@ -172,24 +188,26 @@ const Profile: React.FC = () => {
             name="old_password"
             icon={FiLock}
             type="password"
-            placeholder="Senha atual"
+            placeholder={formatMessage({ id: 'password' })}
           />
 
           <Input
             name="password"
             icon={FiLock}
             type="password"
-            placeholder="Nova senha"
+            placeholder={formatMessage({ id: 'newPasswordPlaceholder' })}
           />
 
           <Input
             name="password_confirmation"
             icon={FiLock}
             type="password"
-            placeholder="Confirmar senha"
+            placeholder={formatMessage({ id: 'confirmPasswordPlaceholder' })}
           />
 
-          <Button type="submit">Confirmar mudanças</Button>
+          <Button type="submit">
+            {formatMessage({ id: 'confirmButton' })}
+          </Button>
         </Form>
       </Content>
     </Container>

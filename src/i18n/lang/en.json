@@ -55,5 +55,8 @@
   "resetPasaswordTitle": "Reset your password",
   "newPasswordPlaceholder": "New password",
   "confirmPasswordPlaceholder": "Confirm your new password",
-  "confirmButton": "Confirm"
+  "confirmButton": "Confirm",
+  "profileTitle": "My profile",
+  "profileUpdatedSuccess": "Profile successfuly updated",
+  "profileUpdatedFail": "Error to update your profile, please, try again"
 }
