@@ -1,5 +1,5 @@
 import { IntlProvider } from './IntlProvider';
+import { AvailableLocales, IntlMessages,  } from './messages';
 
-export * from './messages';
-
-export { IntlProvider };
+export { IntlProvider, IntlMessages };
+export type { AvailableLocales };

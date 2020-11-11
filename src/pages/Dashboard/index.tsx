@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ptBR, enUS } from 'date-fns/locale';
 import { isToday, format, parseISO, isAfter } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
 import { FiClock, FiPower } from 'react-icons/fi';
+import { FormattedMessage, useIntl } from 'react-intl';
 import DayPicker, { DayModifiers } from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
 import { Link } from 'react-router-dom';
+import 'react-day-picker/lib/style.css';
 import {
   Container,
   Header,
@@ -38,6 +39,7 @@ interface Appointment {
 
 const Dashboard: React.FC = () => {
   const { signOut, user } = useAuth();
+  const { formatMessage, locale } = useIntl();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -107,16 +109,18 @@ const Dashboard: React.FC = () => {
   }, [currentMonth, monthAvailability]);
 
   const selectDateAsText = useMemo(() => {
-    return format(selectedDate, "'Dia' dd 'de' MMMM", {
-      locale: ptBR,
+    const dateDescription =
+      locale === 'pt-BR' ? `'Dia' dd 'de' MMMM 'de' yyyy` : `yyyy, MMMM dd`;
+    return format(selectedDate, dateDescription, {
+      locale: locale === 'pt-BR' ? ptBR : enUS,
     });
-  }, [selectedDate]);
+  }, [locale, selectedDate]);
 
   const selectWeekDay = useMemo(() => {
     return format(selectedDate, 'cccc', {
-      locale: ptBR,
+      locale: locale === 'pt-BR' ? ptBR : enUS,
     });
-  }, [selectedDate]);
+  }, [locale, selectedDate]);
 
   const morningAppointments = useMemo(() => {
     return appointments.filter(appointment => {
@@ -143,9 +147,11 @@ const Dashboard: React.FC = () => {
           <img src={logoImg} alt="Gobarber" />
 
           <Profile>
-            <img src={user.avatar_url} alt={user.name} />
+            <Link to="/profile">
+              <img src={user.avatar_url} alt={user.name} />
+            </Link>
             <div>
-              <span>It is time to cut,</span>
+              <span>{formatMessage({ id: 'MessageToProvider' })}</span>
               <Link to="/profile">
                 <strong>{`${user.name}!`}</strong>
               </Link>
@@ -160,16 +166,18 @@ const Dashboard: React.FC = () => {
 
       <Content>
         <Schedule>
-          <h1>Horários Agendados</h1>
+          <h1>{formatMessage({ id: 'yourAppointments' })}</h1>
           <p>
-            {isToday(selectedDate) && <span> Hoje</span>}
+            {isToday(selectedDate) && (
+              <span>{formatMessage({ id: 'today' })}</span>
+            )}
             <span>{selectDateAsText}</span>
             <span>{selectWeekDay}</span>
           </p>
 
           {isToday(selectedDate) && nextAppointment && (
             <NextAppointment>
-              <strong>Atendimento a seguir</strong>
+              <strong>{formatMessage({ id: 'nextAppointment' })}</strong>
               <div>
                 <img
                   src={nextAppointment.user.avatar_url}
@@ -186,10 +194,10 @@ const Dashboard: React.FC = () => {
           )}
 
           <Section>
-            <strong>Manhã</strong>
+            <strong>{formatMessage({ id: 'morning' })}</strong>
 
             {morningAppointments.length === 0 && (
-              <p>Nenhum agendamento nesse período.</p>
+              <p>{formatMessage({ id: 'noAppointmentInPeriod' })}</p>
             )}
 
             {morningAppointments.map(appointment => (
@@ -212,10 +220,12 @@ const Dashboard: React.FC = () => {
           </Section>
 
           <Section>
-            <strong>Tarde</strong>
+            <strong>{formatMessage({ id: 'afternoon' })}</strong>
 
             {afternoonAppointments.length === 0 && (
-              <p>Nenhum agendamento nesse período.</p>
+              <p>
+                <FormattedMessage id="noAppointmentInPeriod" />
+              </p>
             )}
 
             {afternoonAppointments.map(appointment => (
@@ -239,7 +249,15 @@ const Dashboard: React.FC = () => {
         </Schedule>
         <Calendar>
           <DayPicker
-            weekdaysShort={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
+            weekdaysShort={[
+              formatMessage({ id: 'shortSunday' }),
+              formatMessage({ id: 'shortMonday' }),
+              formatMessage({ id: 'shortTuesday' }),
+              formatMessage({ id: 'shortWednesday' }),
+              formatMessage({ id: 'shortThursday' }),
+              formatMessage({ id: 'shortFriday' }),
+              formatMessage({ id: 'shortSaturday' }),
+            ]}
             fromMonth={new Date()}
             disabledDays={[{ daysOfWeek: [0, 6] }, ...disabledDays]}
             modifiers={{
@@ -249,18 +267,18 @@ const Dashboard: React.FC = () => {
             selectedDays={selectedDate}
             onDayClick={dateChangeHandler}
             months={[
-              'Janeiro',
-              'Fevereiro',
-              'Março',
-              'Abril',
-              'Maio',
-              'Junho',
-              'Julho',
-              'Agosto',
-              'Setembro',
-              'Outubro',
-              'Novembro',
-              'Dezembro',
+              formatMessage({ id: 'january' }),
+              formatMessage({ id: 'february' }),
+              formatMessage({ id: 'march' }),
+              formatMessage({ id: 'april' }),
+              formatMessage({ id: 'may' }),
+              formatMessage({ id: 'june' }),
+              formatMessage({ id: 'july' }),
+              formatMessage({ id: 'august' }),
+              formatMessage({ id: 'september' }),
+              formatMessage({ id: 'october' }),
+              formatMessage({ id: 'november' }),
+              formatMessage({ id: 'december' }),
             ]}
           />
         </Calendar>
