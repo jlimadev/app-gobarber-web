@@ -4,6 +4,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
+import { FormattedMessage, useIntl } from 'react-intl';
 import logoImg from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -12,28 +13,37 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
 
-interface signUpFormData {
+interface SignUpFormData {
   name: string;
   email: string;
   password: string;
 }
 
 const SignUp: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
+  const { formatMessage } = useIntl();
   const { addToast } = useToast();
+
+  const formRef = useRef<FormHandles>(null);
+
   const history = useHistory();
 
   const submitHandler = useCallback(
-    async (data: signUpFormData) => {
+    async (data: SignUpFormData) => {
       try {
         formRef.current?.setErrors({});
+        const minDigits = 6;
 
         const schema = Yup.object().shape({
-          name: Yup.string().required('Nome obrigatório'),
+          name: Yup.string().required(
+            `${formatMessage({ id: 'requiredName' })}`,
+          ),
           email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('Digite um e-mail válido'),
-          password: Yup.string().min(6, 'Mínimo 6 dígitios'),
+            .required(`${formatMessage({ id: 'requiredEmail' })}`)
+            .email(`${formatMessage({ id: 'validEmail' })}`),
+          password: Yup.string().min(
+            minDigits,
+            `${formatMessage({ id: 'minDigits' })}: ${minDigits}`,
+          ),
         });
 
         await schema.validate(data, {
@@ -44,9 +54,8 @@ const SignUp: React.FC = () => {
 
         addToast({
           type: 'success',
-          title: 'Cadastro Realizado',
-          description:
-            'Cadastro realizado com sucesso, você já pode realizar o seu logon.',
+          title: `${formatMessage({ id: 'successTitle' })}!`,
+          description: `${formatMessage({ id: 'registerSuccess' })}!`,
         });
 
         history.push('/signin');
@@ -60,13 +69,12 @@ const SignUp: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro ao cadastrar',
-          description: 'Erro ao cadastrar, por favor, tente novamente',
+          title: `${formatMessage({ id: 'failTitle' })}!`,
+          description: `${formatMessage({ id: 'registerFail' })}!`,
         });
       }
-      console.log(data);
     },
-    [addToast, history],
+    [addToast, formatMessage, history],
   );
 
   return (
@@ -77,23 +85,27 @@ const SignUp: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={submitHandler}>
-            <h1>Faça seu cadastro</h1>
+            <h1>{formatMessage({ id: 'createYourAccount' })}</h1>
 
-            <Input icon={FiUser} name="name" placeholder="Nome" />
+            <Input
+              icon={FiUser}
+              name="name"
+              placeholder={formatMessage({ id: 'name' })}
+            />
             <Input icon={FiMail} name="email" placeholder="E-mail" />
             <Input
               icon={FiLock}
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder={formatMessage({ id: 'password' })}
             />
 
-            <Button type="submit">Cadastrar</Button>
+            <Button type="submit">{formatMessage({ id: 'register' })}</Button>
           </Form>
 
           <Link to="/signin">
             <FiArrowLeft />
-            Voltar para o Logon
+            <FormattedMessage id="backToLogin" />
           </Link>
         </AnimationContainer>
       </Content>

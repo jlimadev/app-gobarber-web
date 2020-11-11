@@ -1,6 +1,7 @@
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import React, { useCallback, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { FiArrowLeft, FiMail } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -19,8 +20,10 @@ interface IForgotPasswordFormData {
 const ForgotPassword: React.FC = () => {
   const [isLoading, setIsloading] = useState(false);
   const formRef = useRef<FormHandles>(null);
-  const { addToast } = useToast();
+
   const history = useHistory();
+  const { addToast } = useToast();
+  const { formatMessage } = useIntl();
 
   const submitHandler = useCallback(
     async (data: IForgotPasswordFormData) => {
@@ -31,8 +34,8 @@ const ForgotPassword: React.FC = () => {
 
         const schema = Yup.object().shape({
           email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('Digite um e-mail válido'),
+            .required(`${formatMessage({ id: 'requiredEmail' })}`)
+            .email(`${formatMessage({ id: 'validEmail' })}`),
         });
 
         await schema.validate(data, {
@@ -45,9 +48,8 @@ const ForgotPassword: React.FC = () => {
 
         addToast({
           type: 'success',
-          title: 'E-mail de recupação enviado!',
-          description:
-            'E-mail de recupação enviado, cheque sua caixa de e-mail!',
+          title: `${formatMessage({ id: 'successTitle' })}!`,
+          description: `${formatMessage({ id: 'emailSentDescription' })}!`,
         });
 
         history.push('/signin');
@@ -61,14 +63,14 @@ const ForgotPassword: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro na recupeção de senha',
-          description: 'Erro ao fazer a recuperação de senha, tente novamente',
+          title: `${formatMessage({ id: 'failTitle' })}!`,
+          description: `${formatMessage({ id: 'emailFailDescription' })}!`,
         });
       } finally {
         setIsloading(false);
       }
     },
-    [addToast, history],
+    [addToast, formatMessage, history],
   );
 
   return (
@@ -79,18 +81,18 @@ const ForgotPassword: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={submitHandler}>
-            <h1>Recuperação de Senha</h1>
+            <h1>{formatMessage({ id: 'recoverPassword' })}</h1>
 
             <Input icon={FiMail} name="email" placeholder="E-mail" />
 
             <Button isLoading={isLoading} type="submit" disabled={isLoading}>
-              Recuperar Senha
+              {formatMessage({ id: 'recover' })}
             </Button>
           </Form>
 
           <Link to="/">
             <FiArrowLeft />
-            Voltar para o Logon
+            {formatMessage({ id: 'backToLogin' })}
           </Link>
         </AnimationContainer>
       </Content>

@@ -26,5 +26,22 @@
   "shortFriday": "F",
   "shortSaturday": "S",
   "day": "Day",
-  "of": "of"
+  "of": "of",
+  "requiredEmail": "E-mail is required",
+  "requiredName": "Name is required",
+  "minDigits": "Mininum of digits",
+  "validEmail": "Type a valid e-mail",
+  "successTitle": "Success!",
+  "emailSentDescription": "Recover e-mail successfuly sent",
+  "failTitle": "Oh, no! An error!",
+  "emailFailDescription": "Error sending the e-mail",
+  "recoverPassword": "Recover your password",
+  "recover": "Recover",
+  "backToLogin": "Go back to login",
+  "registerSuccess": "Registered successfuly, now you can login!",
+  "registerFail": "Failed to create your register, please, try again",
+  "name": "Name",
+  "password": "Password",
+  "register": "Register",
+  "createYourAccount": "Create your account"
 }

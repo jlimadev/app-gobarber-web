@@ -26,5 +26,22 @@
   "shortFriday": "S",
   "shortSaturday": "S",
   "day": "Dia",
-  "of": "de"
+  "of": "de",
+  "requiredEmail": "O e-mail é obrigatório",
+  "requiredName": "O nome é obrigatório",
+  "minDigits": "Mínimo de dígitos",
+  "validEmail": "Digite um e-mail válido",
+  "successTitle": "Sucesso!",
+  "emailSentDescription": "E-mail enviado com sucesso",
+  "failTitle": "Ah, não! Um erro!",
+  "emailFailDescription": "Falha ao enviar e-mail",
+  "recoverPassword": "Recuperação de Senha",
+  "recover": "Recuperar",
+  "backToLogin": "Voltar para o login",
+  "registerSuccess": "Cadastro realizado com sucesso, você já pode realizar o seu logon!",
+  "registerFail": "Erro ao cadastrar, por favor, tente novamente!",
+  "name": "Nome",
+  "password": "Senha",
+  "register": "Cadastrar",
+  "createYourAccount": "Faça seu cadastro"
 }
