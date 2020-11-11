@@ -29,6 +29,7 @@
   "of": "de",
   "requiredEmail": "O e-mail é obrigatório",
   "requiredName": "O nome é obrigatório",
+  "requiredPassword": "A senha é obrigatória",
   "minDigits": "Mínimo de dígitos",
   "validEmail": "Digite um e-mail válido",
   "successTitle": "Sucesso!",
@@ -43,5 +44,16 @@
   "name": "Nome",
   "password": "Senha",
   "register": "Cadastrar",
-  "createYourAccount": "Faça seu cadastro"
+  "createYourAccount": "Faça seu cadastro",
+  "authenticationFail": "Erro na autenticação, cheque as credenciais",
+  "signInTitle": "Entre na sua conta",
+  "signInButton": "Entrar",
+  "forgotPasswordButton": "Esqueci minha senha",
+  "createAccount": "Criar uma conta",
+  "invalidConfirmation": "Confirmação de senha inválida",
+  "failToReset": "Ocorreu um erro ao resetar sua senha, tente novamente",
+  "resetPasaswordTitle": "Reset de Senha",
+  "newPasswordPlaceholder": "Nova senha",
+  "confirmPasswordPlaceholder": "Confirme a nova senha",
+  "confirmButton": "Confirmar"
 }

@@ -4,6 +4,7 @@ import React, { useCallback, useRef } from 'react';
 import { FiLock, FiLogIn, FiMail } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 import logoImg from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -19,8 +20,9 @@ interface SingInFormData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { addToast } = useToast();
   const history = useHistory();
+  const { formatMessage } = useIntl();
+  const { addToast } = useToast();
 
   const { signIn } = useAuth();
 
@@ -31,9 +33,11 @@ const SignIn: React.FC = () => {
 
         const schema = Yup.object().shape({
           email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('Digite um e-mail válido'),
-          password: Yup.string().required('Senha obrigatória'),
+            .required(`${formatMessage({ id: 'requiredEmail' })}`)
+            .email(`${formatMessage({ id: 'validEmail' })}`),
+          password: Yup.string().required(
+            `${formatMessage({ id: 'requiredPassword' })}`,
+          ),
         });
 
         await schema.validate(data, {
@@ -56,12 +60,12 @@ const SignIn: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro na autenticação',
-          description: 'Erro na autenticação, cheque as credenciais.',
+          title: `${formatMessage({ id: 'failTitle' })}!`,
+          description: `${formatMessage({ id: 'authenticationFail' })}!`,
         });
       }
     },
-    [signIn, addToast, history],
+    [formatMessage, signIn, history, addToast],
   );
 
   return (
@@ -71,7 +75,7 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={submitHandler}>
-            <h1>Faça seu logon</h1>
+            <h1>{formatMessage({ id: 'signInTitle' })}</h1>
 
             <Input icon={FiMail} name="email" placeholder="E-mail" />
 
@@ -79,17 +83,21 @@ const SignIn: React.FC = () => {
               icon={FiLock}
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder={formatMessage({ id: 'password' })}
             />
 
-            <Button type="submit">Entrar</Button>
+            <Button type="submit">
+              {formatMessage({ id: 'signInButton' })}
+            </Button>
 
-            <Link to="/forgot-password">Esqueci minha senha</Link>
+            <Link to="/forgot-password">
+              {formatMessage({ id: 'forgotPasswordButton' })}
+            </Link>
           </Form>
 
           <Link to="/signup">
             <FiLogIn />
-            Criar conta
+            {formatMessage({ id: 'createAccount' })}
           </Link>
         </AnimationContainer>
       </Content>

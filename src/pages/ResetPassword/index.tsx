@@ -2,6 +2,7 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import React, { useCallback, useRef } from 'react';
 import { FiLock } from 'react-icons/fi';
+import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 import logoImg from '../../assets/logo.svg';
@@ -18,10 +19,11 @@ interface ResetPasswordFormData {
 }
 
 const ResetPassword: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
+  const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const location = useLocation();
+  const { formatMessage } = useIntl();
 
   const submitHandler = useCallback(
     async (data: ResetPasswordFormData) => {
@@ -29,10 +31,15 @@ const ResetPassword: React.FC = () => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          password: Yup.string().required('Senha obrigatória'),
+          password: Yup.string().required(
+            `${formatMessage({ id: 'requiredPassword' })}`,
+          ),
           password_confirmation: Yup.string()
             .nullable()
-            .oneOf([Yup.ref('password'), null], 'Confirmação incorreta'),
+            .oneOf(
+              [Yup.ref('password'), null],
+              `${formatMessage({ id: 'invalidConfirmation' })}`,
+            ),
         });
 
         await schema.validate(data, {
@@ -63,12 +70,12 @@ const ResetPassword: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro ao resetar a senha',
-          description: 'Ocorreu um erro ao resetar sua senha, tente novamente.',
+          title: `${formatMessage({ id: 'failTitle' })}!`,
+          description: `${formatMessage({ id: 'failToReset' })}!`,
         });
       }
     },
-    [addToast, history, location.search],
+    [addToast, formatMessage, history, location.search],
   );
 
   return (
@@ -78,23 +85,25 @@ const ResetPassword: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={submitHandler}>
-            <h1>Reset de Senha</h1>
+            <h1>{formatMessage({ id: 'resetPasaswordTitle' })}</h1>
 
             <Input
               icon={FiLock}
               name="password"
               type="password"
-              placeholder="Digite a sua nova senha"
+              placeholder={formatMessage({ id: 'newPasswordPlaceholder' })}
             />
 
             <Input
               icon={FiLock}
               name="password_confirmation"
               type="password"
-              placeholder="Confirme a sua nova senha"
+              placeholder={formatMessage({ id: 'confirmPasswordPlaceholder' })}
             />
 
-            <Button type="submit">Confirmar</Button>
+            <Button type="submit">
+              {formatMessage({ id: 'confirmButton' })}
+            </Button>
           </Form>
         </AnimationContainer>
       </Content>

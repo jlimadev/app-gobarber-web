@@ -43,6 +43,7 @@
       "camelcase": "off",
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/interface-name-prefix": "off",
+      "@typescript-eslint/camelcase": "off",
       "prettier/prettier": ["error", {
         "endOfLine":"auto"
      }],

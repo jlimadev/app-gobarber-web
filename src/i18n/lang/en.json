@@ -29,6 +29,7 @@
   "of": "of",
   "requiredEmail": "E-mail is required",
   "requiredName": "Name is required",
+  "requiredPassword": "Password is required",
   "minDigits": "Mininum of digits",
   "validEmail": "Type a valid e-mail",
   "successTitle": "Success!",
@@ -43,5 +44,16 @@
   "name": "Name",
   "password": "Password",
   "register": "Register",
-  "createYourAccount": "Create your account"
+  "createYourAccount": "Create your account",
+  "authenticationFail": "Authentication failed, please, check your credentials",
+  "signInTitle": "Sign in to your account",
+  "signInButton": "Sign In",
+  "forgotPasswordButton": "Forgot my password",
+  "createAccount": "Create a account",
+  "invalidConfirmation": "Invalid password confirmation",
+  "failToReset": "An error occurred on reset the password, please, try again",
+  "resetPasaswordTitle": "Reset your password",
+  "newPasswordPlaceholder": "New password",
+  "confirmPasswordPlaceholder": "Confirm your new password",
+  "confirmButton": "Confirm"
 }
