@@ -1,0 +1,14 @@
+{
+  "i18n-ally.localesPaths": [
+      "src/i18n/lang"
+  ],
+  "i18n-ally.enabledParsers": [
+      "ts",
+      "json"
+  ],
+  "i18n-ally.displayLanguage": "en",
+  "i18n-ally.enabledFrameworks": [
+      "react"
+  ],
+  "i18n-ally.keystyle": "flat",
+}
