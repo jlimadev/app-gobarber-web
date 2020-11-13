@@ -58,5 +58,11 @@
   "confirmButton": "Confirmar",
   "profileTitle": "Meu perfil",
   "profileUpdatedSuccess": "Suas informações do perfil foram atualizadas com sucesso!",
-  "profileUpdatedFail": "Erro ao atualizar o perfil, tente novamente"
+  "profileUpdatedFail": "Erro ao atualizar o perfil, tente novamente",
+  "findYourBarber": "Encontre seu barbeiro",
+  "findAProvider": "Visualizar barbeiros disponíveis",
+  "signOut": "Sair",
+  "home": "Página inicial",
+  "noProvidersFound": "Nenhum barbeiro encontrado",
+  "chooseYourBarber": "Escolha seu barbeiro"
 }

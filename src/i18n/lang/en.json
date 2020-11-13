@@ -58,5 +58,11 @@
   "confirmButton": "Confirm",
   "profileTitle": "My profile",
   "profileUpdatedSuccess": "Profile successfuly updated",
-  "profileUpdatedFail": "Error to update your profile, please, try again"
+  "profileUpdatedFail": "Error to update your profile, please, try again",
+  "findYourBarber": "Find your barber",
+  "findAProvider": "Find available barbers",
+  "signOut": "Sign Out",
+  "home": "Home",
+  "noProvidersFound": "No barbers found",
+  "chooseYourBarber": "Choose your barber"
 }
