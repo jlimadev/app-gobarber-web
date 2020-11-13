@@ -19,7 +19,7 @@ export const HeaderContent = styled.div`
   }
 
   button {
-    margin-left: auto;
+    margin-left: 15px;
     background: transparent;
     border: 0;
 
@@ -29,6 +29,10 @@ export const HeaderContent = styled.div`
       height: 20px;
     }
   }
+`;
+
+export const HeaderButtonsContainer = styled.div`
+  margin-left: auto;
 `;
 
 export const Profile = styled.div`

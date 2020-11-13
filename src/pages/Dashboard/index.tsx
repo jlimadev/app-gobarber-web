@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ptBR, enUS } from 'date-fns/locale';
 import { isToday, format, parseISO, isAfter } from 'date-fns';
-import { FiClock, FiPower } from 'react-icons/fi';
+import { FiClock, FiPower, FiUsers } from 'react-icons/fi';
 import { FormattedMessage, useIntl } from 'react-intl';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,7 @@ import {
   NextAppointment,
   Section,
   Appointment,
+  HeaderButtonsContainer,
 } from './styles';
 import logoImg from '../../assets/logo.svg';
 import { useAuth } from '../../hooks/auth';
@@ -158,9 +159,24 @@ const Dashboard: React.FC = () => {
             </div>
           </Profile>
 
-          <button type="button" onClick={signOut}>
-            <FiPower />
-          </button>
+          <HeaderButtonsContainer>
+            <Link to="/providers">
+              <button
+                type="button"
+                title={formatMessage({ id: 'findAProvider' })}
+              >
+                <FiUsers />
+              </button>
+            </Link>
+
+            <button
+              type="button"
+              onClick={signOut}
+              title={formatMessage({ id: 'signOut' })}
+            >
+              <FiPower />
+            </button>
+          </HeaderButtonsContainer>
         </HeaderContent>
       </Header>
 
